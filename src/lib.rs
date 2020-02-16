@@ -1,9 +1,24 @@
+/// Unfold is an iterator struct that contains a value `base` and a function `f`.
+/// On every iteration, the `Unfold` iterator maps the `base` value to an optional
+/// pair `(a', b)`.  If the pair is returned, the iterator updates its `base` to
+/// `a'` and returns the value `b`. Otherwise, the `None`
+/// value terminates the iterator.
+///
+/// If `f` never returns a `None` value, then the iterator will be infinite.
+///
+/// # Types
+/// - `base`: Any type `A`
+/// - `f`: A function satisfying the trait `FnMut(&mut A) -> Option<(A, B)>`,
+/// where `B` is the desired output type.
 struct Unfold<A, F> {
     base: A,
     f: F,
 }
 
 impl<A, F> Unfold<A, F> {
+    /// Creates a new `Unfold` iterator given:
+    /// - `base`: Any type `A`
+    /// - `f`: `FnMut(&mut A) -> Option<(A, B)>`
     fn new(base: A, f: F) -> Self {
         Unfold { base, f }
     }
